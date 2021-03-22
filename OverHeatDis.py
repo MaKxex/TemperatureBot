@@ -62,7 +62,7 @@ async def Presence():
 async def on_disconnect():
     for number in vip:
         vipUser = await client.fetch_user(number)
-        await vipUser.send(f"Cannot connecting to Discord Server")
+        await vipUser.send(f"Cannot connect to the Discord Server")
 
 logo= f'''
                 ████              
