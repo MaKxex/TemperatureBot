@@ -32,4 +32,4 @@ async def Presence():
 sched.add_job(Presence, 'interval', seconds=10)
 sched.start()
 
-client.run("ODIyODgzODU0MTM4MjEyMzYy.YFYwTw.RT4T0bqT78avcrvrFByM9HjCcHg")
+client.run("TOKEN")
