@@ -10,6 +10,7 @@ except Exception as e:
     sys.exit("Restart the Prototype.")
 
 from CheckTemp import checktemp, checkusage
+import config
 
 client = commands.Bot(command_prefix=".")
 sched = AsyncIOScheduler()
@@ -52,7 +53,7 @@ async def temp(ctx):
 async def info(ctx):
     author = ctx.author
     cpuTemp, gpuTemp = checktemp()
-    cpu, ram, gpu,= checkusage()
+    cpu, ram, gpu= checkusage()
 
     embed=discord.Embed(color=0xcb0b0b)
     embed.set_author(name=author)
@@ -77,7 +78,6 @@ async def addvip(ctx, id):
 async def clear(ctx, number):
     await ctx.channel.purge(limit=int(number) + 1)
 
-
 async def Presence():
     cpuTemp, gpuTemp = checktemp()
     if cpuTemp >= critTemp:
@@ -85,7 +85,14 @@ async def Presence():
             vipUser = await client.fetch_user(number)
             await vipUser.send(f"CPU Temperature is critical : {str(cpuTemp)}°")
     await client.change_presence(activity=discord.Game(f"CPU Temp. : {cpuTemp}°"))
-    
+
+@client.command()
+@commands.has_permissions(administrator= True)
+async def test(ctx):
+    num = input("id : ")
+    msg = input("Message : ")
+    vipUser = await client.fetch_user(num)
+    await vipUser.send(f"{msg}")
 
 @client.event
 async def on_disconnect():
@@ -118,10 +125,11 @@ logo= f'''
             ████░░░░░░░░░░░░██        
                 ████████████          
 '''
+
 sched.add_job(Presence, 'interval', seconds=10)
 sched.start()
 
 print(logo)
 
 if __name__ == "__main__":
-    client.run("")
+    client.run(config.settings.get("token"))
