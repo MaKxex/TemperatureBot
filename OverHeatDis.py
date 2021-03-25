@@ -86,14 +86,6 @@ async def Presence():
             await vipUser.send(f"CPU Temperature is critical : {str(cpuTemp)}°")
     await client.change_presence(activity=discord.Game(f"CPU Temp. : {cpuTemp}°"))
 
-@client.command()
-@commands.has_permissions(administrator= True)
-async def test(ctx):
-    num = input("id : ")
-    msg = input("Message : ")
-    vipUser = await client.fetch_user(num)
-    await vipUser.send(f"{msg}")
-
 @client.event
 async def on_disconnect():
     for number in vip:
